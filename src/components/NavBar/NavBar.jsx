@@ -1,16 +1,17 @@
 import CartWidget from "../CartWidget/CartWidget"
 import Logo from "../Logo/Logo"
+import Button from "../Button/Button"
 
 const NavBar = () => {
     return (
         <nav>
             < Logo />
             <div>
-                <button> Services </button>
-                <button> Products </button>
-                <button> About Us </button>
-                <button> Languages </button>
-                <button> Book Now </button>
+                < Button label={'Service'} clickeando={() => console.log('Service')}/>
+                < Button label={'Products'} clickeando={() => console.log('Products')}/>
+                < Button label={'About Us'} clickeando={() => console.log('ServAbout Usice')}/>
+                < Button label={'Languages'} clickeando={() => console.log('Languages')}/>
+                < Button label={'Book Now'} clickeando={() => console.log('Book Now')}/>
             </div>
             < CartWidget />
         </nav>

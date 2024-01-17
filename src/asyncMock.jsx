@@ -1,10 +1,12 @@
+/* import limpiezaSemanalImage from './assets/images/limpiezaSemanal.jpg';
+ */
 const products = [
     {
-        id: '1', 
+        id: '1',
         name: 'limpieza semanal',
         price: 100,
         category: 'limpieza',
-        img: '',
+        img: 'limpiezaSemanalImage',  
         stock: 10,
         description: 'Una limpieza semanal de casa o departamento'
     },
@@ -23,18 +25,18 @@ export const getProducts = () => {
             resolve(products)
         }, 500)
     })
- }
+}
 export const getProductsByCategory = (categoryId) => {
     return new Promise((resolve) => {
         setTimeout(() => {
             resolve(products.filter(prod => prod.category === categoryId))
         }, 500)
     })
- }
-    export const getProductById = (productId) => {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                resolve(products.find(prod => prod.id === productId))
-            }, 500)
-        })
-    }
+}
+export const getProductById = (productId) => {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(products.find(prod => prod.id === productId))
+        }, 500)
+    })
+}

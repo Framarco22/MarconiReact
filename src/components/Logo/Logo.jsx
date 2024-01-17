@@ -1,11 +1,12 @@
-import logo from '../Logo/assets/logo.png'
+import React from 'react';
+import logo from '../Logo/assets/logo.png';
 
 const Logo = () => {
     return (
-        <div>
-            < img src={logo} alt="Logo" />
+        <div className="navbar-brand">
+            <img src={logo} alt="Logo" className="img-fluid" />
         </div>
-    )
-}
+    );
+};
 
-export default Logo
+export default Logo;

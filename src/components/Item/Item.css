@@ -1,0 +1,42 @@
+.CardItem {
+    border: 1px solid #cfd8dc;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.Header {
+    background-color: #2196f3;
+    color: white;
+    padding: 10px;
+}
+
+.ItemImg {
+    width: 100%;
+    height: auto;
+}
+
+.ItemInfo {
+    padding: 10px;
+}
+
+.Info {
+    margin: 5px 0;
+}
+
+.ItemFooter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.Option {
+    background-color: #64b5f6;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}

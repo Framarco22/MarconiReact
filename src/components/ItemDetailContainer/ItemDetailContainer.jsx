@@ -1,33 +1,60 @@
 import { useState, useEffect } from "react";
-import 'bootstrap/dist/css/bootstrap.min.css'; // Importa el archivo CSS de Bootstrap
-import { getProductById } from "../../asyncMock";
-import ItemDetail from '../ItemDetail/ItemDetail';
-import { useParams } from 'react-router-dom'
+import { useParams } from "react-router-dom";
+import { db } from "../../services/firebase/firebaseConfig";
+import { getDoc, doc, QueryDocumentSnapshot} from "firebase/firestore";
+import ItemDetail from "../ItemDetail/ItemDetail";
+import { useNotification } from "../notification/NotificationService";
+import {createProductFromFirestore} from '../../adapters/createProductsFromFirestore'
 
 const ItemDetailContainer = () => {
-    const [product, setProduct] = useState([]);
+  const [loading, setLoading] = useState(true)
+  const [product, setProduct] = useState(null)
 
-    const { id } = useParams()
+  const { productId } = useParams()
 
-    useEffect(() => {
-        getProductById(id) 
-            .then(response => {
-                setProduct(response);
-            })
-            /* .catch(error => {
-                console.error(error);
-            }); */
-    }, [id]);
+  const { showNotification } = useNotification()
 
-    if(!product) {
-        return <h1>El producto no existe</h1>
+  useEffect(() => {
+      if(product) document.title = product.name
+      
+      return () => {
+          document.title = 'Ecommerce'
+      }
+  })
+
+  useEffect(() => {
+      setLoading(true)
+
+      const productDocument = doc(db, 'products', productId)
+
+      getDoc(productDocument)
+          .then(queryDocumentSnapshot => {
+            const productAdapted = createProductFromFirestore(queryDocumentSnapshot)
+            setProduct(productAdapted)
+          })
+          .catch(error => {
+              showNotification('error', 'Hubo un error')
+          })
+          .finally(() => {
+              setLoading(false)
+          })
+
+        }, [productId])
+
+        if(loading) {
+            return <h1>Cargando el producto...</h1>
+        }
+    
+        if(!product) {
+            return <h1>El producto no existe</h1>
+        }
+        return (
+            <div>
+                <h1>Detalle</h1>
+                <ItemDetail {...product} />
+                
+            </div>
+        )
     }
-
-    return (
-        <div className='container mt-4'>
-            <ItemDetail {...product} />
-        </div>
-    );
-}
-
-export default ItemDetailContainer;
+    
+    export default ItemDetailContainer

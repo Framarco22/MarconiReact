@@ -1,44 +1,28 @@
-import React, { useState } from 'react';
-import ItemCount from '../ItemCount/ItemCount';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { Link } from 'react-router-dom'
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Link } from "react-router-dom";
+import "./Item.css";
 
-const Item = ({ id, name, img, price, stock }) => {
-  const [quantity, setQuantity] = useState(1);
-
-  const handleAddToCart = () => {
-    console.log(`Añadido al carrito: ${quantity} unidades`);
-  };
+const Item = ({ id, name, img, category, price, stock}) => {
+  console.log('render de item: ', id)
 
   return (
-    <div className="card CardItem" style={{ width: '250px' }}>
-      <img src={img} className="card-img-top" alt={name} />
-      <div className="card-body">
-        <h5 className="card-title">{name}</h5>
+    <div className="card CardItem" style={{ width: "250px" }}>
+      <div className="image-container">
+        <img src={img} alt={name} className="ItemImg" />
+      </div>
+
+        <h2 className="card-title">{name}</h2>
+        <h2 className="card-title">{category}</h2>
         <p className="card-text">Price: ${price}</p>
         <p className="card-text">Available Stock: {stock}</p>
 
-        <ItemCount
-          initial={1}
-          stock={stock}
-          onAdd={(quantity) => setQuantity(quantity)}
-        />
-
-        <button
-          className="btn btn-primary"
-          onClick={handleAddToCart}
-          style={{ margin: '10px 0' }}
-        >
-          Add to Cart
-        </button>
         <Link
           className="btn btn-secondary"
-          style={{ margin: '10px 0' }}
+          style={{ margin: "10px 0" }}
           to={`/detail/${id}`}
         >
-          Ver detalle 
+          Ver detalle
         </Link>
-      </div>
     </div>
   );
 };

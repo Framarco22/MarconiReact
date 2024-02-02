@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import CartWidget from '../CartWidget/CartWidget';
 import Logo from '../Logo/Logo';
 import Button from '../Button/Button';
@@ -6,6 +6,11 @@ import { Link } from 'react-router-dom';
 import './NavBar.css';
 
 const NavBar = () => {
+    const [selectedCategory, setSelectedCategory] = useState('');
+
+    const handleCategoryClick = (category) => {
+        setSelectedCategory(category);
+    };
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light align-items-center">
             <Logo />
@@ -17,8 +22,8 @@ const NavBar = () => {
                 <Button label={'Book Now'} clickeando={() => console.log('Book Now')} />
             </div>
             <section>
-                <Link to='/category/limpieza' className="btn btn-danger">Limpieza</Link>
-                <Link to='/category/extras' className="btn btn-danger">Extras</Link>
+            <Link to='/category/limpieza' className="btn btn-danger" onClick={() => handleCategoryClick('limpieza')}>Limpieza</Link>
+            <Link to='/category/extras' className="btn btn-danger" onClick={() => handleCategoryClick('extras')}>Extras</Link>
             </section>
             <CartWidget />
         </nav>

@@ -1,44 +1,57 @@
-import React, { useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Importa el archivo CSS de Bootstrap
-import ItemCount from "../ItemCount/ItemCount";
+import { useState  } from 'react'
+import { Link } from 'react-router-dom'
+import ItemCount from '../ItemCount/ItemCount'
+import { useCart } from '../../context/CartContext'
+import { useNotification } from '../notification/NotificationService'
 
-const ItemDetail = ({ id, name, img, category, description, price, stock }) => {
-    const [quantity, setQuantity] = useState(1);
+const ItemDetail = ({ id, name, category, img, price, stock, description }) => {
+    const [quantity, setQuantity] = useState(0)
 
-    const handleAddToCart = () => {
-        console.log(`Añadido al carrito: ${quantity} unidades`);
-    };
+    const { addItem } = useCart()
+
+    const { showNotification } = useNotification()
+
+    const handleOnAdd = (quantity) => {
+        const objProductToAdd = {
+            id, name, price, quantity
+        }
+        addItem(objProductToAdd)
+        showNotification('info', `Se agregaron correctamente ${quantity} ${name}`)
+        setQuantity(quantity)
+    }
 
     return (
-        <article className="CardItem">
-            <header className="Header">
-                <h2 className="ItemHeader">{name}</h2>
+        <article>
+            <header>
+                <h2>
+                    {name}
+                </h2>
             </header>
             <picture>
-                <img src={img} alt={name} className="ItemImg" />
+                <img src={img} alt={name} style={{ width: 100}}/>
             </picture>
             <section>
-                <p className="Info">Category: {category} </p>
-                <p className="Info">Description: {description} </p>
-                <p className="Info">Price: ${price} </p>
-            </section>
-            <footer className="ItemFooter">
-                <button className="btn btn-outline-secondary mr-2">View details</button>
-
-                <ItemCount
-                    initial={1}
-                    stock={stock}
-                    onAdd={(quantity) => setQuantity(quantity)}
-                />
-                <button
-                    className="btn btn-primary ml-2"
-                    onClick={handleAddToCart}
-                >
-                    Add to Cart
-                </button>
+                <p>
+                    Categoria: {category}
+                </p>
+                <p>
+                    Descripción: {description}
+                </p>
+                <p>
+                    Precio: {price}
+                </p>
+            </section>           
+            <footer>
+                {
+                    quantity === 0 ? (
+                        <ItemCount onAdd={handleOnAdd} stock={stock}/>
+                    ) : (
+                        <Link to='/cart'>Finalizar compra</Link>
+                    )
+                }
             </footer>
         </article>
-    );
-};
+    )
+}
 
-export default ItemDetail;
+export default ItemDetail
